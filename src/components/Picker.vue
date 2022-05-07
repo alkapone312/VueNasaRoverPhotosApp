@@ -23,7 +23,7 @@
 			<option value="MINITES">Miniature Thermal Emission Spectrometer</option>
 		</select>
 
-		<div class="date">
+		<div class="date" v-if="this.dateType">
 			<label for="day">Day</label>
 			<label for="month">Month</label>
 			<label for="year">Year</label>
@@ -31,6 +31,15 @@
 			<input type="number" class = "day pick" name="day" min="1" max="31" value="1">
 			<input type="number" class = "month pick" name="month" min="1" max="12" value="1">
 			<input type="number" class = "year pick" name="year" min="1980" max="2022" value="1980">
+		</div>
+
+		<div class="sol" v-if="!this.dateType">
+			<input type="number" class = "sol pick" name="sol" min="0" value="0">
+		</div>
+
+		<div class="dateType" @click="this.dateType = !this.dateType;">
+			<div :class="{active : dateType}">Earth date</div>
+			<div :class="{active : !dateType}">Sols</div>
 		</div>
 	</div>
 </template>
@@ -42,17 +51,19 @@ export default {
 
   data () {
     return {
-
+    	dateType: true, //true - earth date, false - sol's
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+	$textOnWhite: #444;
+
 	.pickerWrapper
 	{
 		display: grid;
-		grid-template-rows:2fr 0.5fr 1.5fr 0.5fr 1.5fr 0.5fr 1.5fr;
+		grid-template-rows:2fr 0.5fr 1.5fr 0.5fr 1.5fr 0.5fr 1.5fr 0.2fr;
 		width: 80%;
 		height: 600px;
 
@@ -103,7 +114,7 @@ export default {
 		left: -40%;
 		top: -10px;
 		transform:translate(50%, 50%);
-		color: #444;
+		color: $textOnWhite;
 	}
 
 	.date
@@ -115,10 +126,48 @@ export default {
 		grid-gap: 10px;
 		width: 80%;
 
-		.day, .month, .year, label
+		.day, .month, .year
 		{
 			width: 100%;
 			margin: 0;
 		}
+	}
+
+	.sol
+	{
+		width: 80%;
+		display: block;
+		flex-direction: column;
+		input
+		{
+			width: 100%;
+			margin: 0;
+		}
+
+		label
+		{
+
+		}
+	}
+
+	.dateType
+	{
+		display: flex;
+		flex-direction: row;
+		text-align: center;
+		width: 100%;
+		align-items: center;
+		color: $textOnWhite;
+		cursor: pointer;
+
+		div
+		{
+			width: 50%;
+		}
+	}
+
+	.active
+	{
+		font-weight: 600;
 	}
 </style>
