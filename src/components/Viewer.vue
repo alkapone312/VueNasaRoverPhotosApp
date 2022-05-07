@@ -1,10 +1,8 @@
 <template>
 	<div class="viewerWrapper">
-		<Transition name="showImg">
-			<div class="viewer" :style="style">
-		    	<div v-show="show" class="close" @click="$emit('closeImage')"></div>
-			</div>
-		</Transition>
+		<div class="viewer" :style="style">
+	    	<div v-show="show" class="close" @click="$emit('closeImage')"></div>
+		</div>
 	</div>
 </template>
 
@@ -63,16 +61,6 @@ export default {
 		background-size:contain;
 		background-repeat:no-repeat;
 		background-position: center;
-	}
-
-	.showImg-enter-active,
-	.showImg-leave-active {
-		transition: all 1s ease;
-	}
-
-	.showImg-enter-from,
-	.showImg-leave-to {
-		transform:scale(0.1);
 	}
 
 	.close {
