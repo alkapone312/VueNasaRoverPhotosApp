@@ -8,6 +8,7 @@
     "test:unit": "vitest --environment jsdom"
   },
   "dependencies": {
+    "sass": "^1.51.0",
     "vue": "^3.2.33"
   },
   "devDependencies": {
