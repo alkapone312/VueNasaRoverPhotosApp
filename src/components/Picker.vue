@@ -1,5 +1,6 @@
 <template>
-	<div class="pickerWrapper">
+	<Transition name="view">
+	<div class="pickerWrapper" v-if="this.ready">
 
 		<p class="quote">"Almost before we knew it, we had left the ground."</p>
 
@@ -46,6 +47,7 @@
 			Search!
 		</button>
 	</div>
+	</Transition>
 </template>
 
 <script>
@@ -59,7 +61,12 @@ export default {
   data () {
     return {
     	dateType: true, //true - earth date, false - sol's
+    	ready: false,
     }
+  },
+
+  mounted() {
+  	this.ready=true;
   }
 }
 </script>
@@ -133,8 +140,9 @@ export default {
 		grid-gap: 10px;
 		width: 80%;
 
-		.day, .month, .year
+		.day, .month, .year, label
 		{
+			left: -50%;
 			width: 100%;
 			margin: 0;
 		}
@@ -175,6 +183,7 @@ export default {
 
 	.active
 	{
+		font-size: 1.2em;
 		font-weight: 600;
 	}
 
@@ -196,4 +205,31 @@ export default {
 			background-color: rgba(#000, 0.75);
 		}
 	}
+
+	.view-enter-active,
+	.view-leave-active {
+	  transition: all 1s ease;
+	  transition-delay: .1s;
+	}
+
+	.view-enter-from,
+	.view-leave-to {
+	  opacity: 0;
+	  margin-top: 50px;
+	}
+
+	@media (min-width: 810px) {
+		.quote
+		{
+			font-size: 2em;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.quote
+		{
+			font-size: 3em;
+		}
+	}
+
 </style>
