@@ -1,7 +1,9 @@
 <template>
   <div class="gallery">
+      <div class="close" @click="$emit('closeImage')"></div>
+
       <TransitionGroup name="showImage">
-        <img v-for="i in data.photos.length" :class="{show : show[i]}" :key="i" class="galleryItem" :src="data.photos[i-1].img_src" @load="showElement(i)"/>
+        <img v-for="i in data.photos.length" :class="{show : show[i]}" :key="i" class="galleryItem" :src="data.photos[i-1].img_src" @load="showElement(i)" @click="$emit('openImage', i)"/>
       </TransitionGroup>
   </div>
 </template>
@@ -45,7 +47,7 @@ export default {
     padding:10%;
     padding-top: 10vh;
     height: 100vh;
-    background-color: rgba(255,255,255,.1);
+    background-color: rgba(255,255,255,1);
     overflow-y: scroll;
   }
 
@@ -81,4 +83,34 @@ export default {
   {
     opacity: 1;
   }
+
+  .close {
+  position: absolute;
+  right: 32px;
+  top: 32px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.3;
+  cursor: pointer;
+
+    &:hover {
+    opacity: 1;
+    }
+    &:before, &:after {
+      position: absolute;
+      left: 15px;
+      content: ' ';
+      height: 33px;
+      width: 2px;
+      background-color: #333;
+    }
+    &:before {
+      transform: rotate(45deg);
+    }
+    &:after {
+      transform: rotate(-45deg);
+    }
+}
+
+
 </style>

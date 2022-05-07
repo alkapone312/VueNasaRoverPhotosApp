@@ -3,14 +3,20 @@
 
     <HeroImage />
 
-    <Transition name="view">
+    <Transition name="pickerShow">
       <Picker v-if="this.ready && this.mode === 0" @request="handleRequest"/>
     </Transition>
 
-    <Gallery v-if="mode=== 1" :data="data"/>
+    <Transition name="fade">
+      <Gallery v-if="mode=== 1" :data="data" @openImage="openImage"/>
+    </Transition>
 
     <Transition name="noResults">
       <NoResults v-if="this.noResults"/>
+    </Transition>
+
+    <Transition name=fade>
+      <Viewer v-if="showImage" :image="image" @closeImage="this.showImage = false"/>
     </Transition>
 
   </div>
@@ -23,6 +29,7 @@ import HeroImage from './components/HeroImage.vue';
 import Picker from './components/Picker.vue';
 import NoResults from './components/NoResults.vue';
 import Gallery from './components/Gallery.vue';
+import Viewer from './components/Viewer.vue';
 //create your own api key here - https://api.nasa.gov/
 import Config from './config.js';
 
@@ -34,6 +41,7 @@ export default {
   name: 'App',
 
   components: {
+    Viewer,
     Gallery,
     NoResults,
     Picker,
@@ -47,6 +55,8 @@ export default {
       page:1,
       mode: 0, // 0 - search, 1 - browse picks
       data: null,
+      showImage: false,
+      image:null
     }
   },
 
@@ -85,6 +95,12 @@ export default {
             .catch((error) => {
               console.log(error);
             });
+    },
+
+    openImage(index)
+    {
+      this.showImage = true;
+      this.image=this.data.photos[index].img_src;
     }
   },
 
@@ -119,14 +135,14 @@ export default {
     -webkit-appearance: none;
   }
 
-  .view-enter-active,
-  .view-leave-active {
+  .pickerShow-enter-active,
+  .pickerShow-leave-active {
     transition: all 1s ease;
     transition-delay: .1s;
   }
 
-  .view-enter-from,
-  .view-leave-to {
+  .pickerShow-enter-from,
+  .pickerShow-leave-to {
     opacity: 0;
     margin-top: 50px;
   }
@@ -141,5 +157,15 @@ export default {
   .noResults-leave-to {
     opacity: 0;
     margin-top: -60px;
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: all 1s ease;
+  }
+
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
   }
 </style>
