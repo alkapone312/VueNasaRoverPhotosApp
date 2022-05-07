@@ -8,7 +8,7 @@
     </Transition>
 
     <Transition name="fade">
-      <Gallery v-if="mode=== 1" :data="data" @openImage="openImage"/>
+      <Gallery v-if="mode=== 1" :data="data" @openImage="openImage" @closeGallery="this.mode=0; this.data=null"/>
     </Transition>
 
     <Transition name="noResults">
@@ -100,7 +100,7 @@ export default {
     openImage(index)
     {
       this.showImage = true;
-      this.image=this.data.photos[index].img_src;
+      this.image=this.data.photos[index];
     }
   },
 

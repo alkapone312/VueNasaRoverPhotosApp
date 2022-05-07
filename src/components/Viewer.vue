@@ -1,7 +1,13 @@
 <template>
 	<div class="viewerWrapper">
 		<div class="viewer" :style="style">
-	    	<div v-show="show" class="close" @click="$emit('closeImage')"></div>
+	    	<div class="close" @click="$emit('closeImage')"></div>
+	    	<div class="info">
+	    		Rover: {{this.image.rover.name}}<br>
+	    		Sol: {{this.image.sol}}<br> 
+	    		Camera: {{this.image.camera.name}}<br>
+	    		Earth date: {{this.image.earth_date}}
+	    	</div>
 		</div>
 	</div>
 </template>
@@ -13,27 +19,21 @@ export default {
 
   props: {
     image: {
-      type: String, // String, Number, Boolean, Function, Object, Array
+      type: Object, // String, Number, Boolean, Function, Object, Array
       required: true,
     }
   },
 
   data () {
     return {
-    	show:false,
     }
   },
 
   computed: {
     style () {
-      return `background-image:url("${this.image}");`;
+      return `background-image:url("${this.image.img_src}");`;
     }
   },
-
-  mounted()
-  {
-  	setTimeout(()=>{this.show = true}, 100)
-  }
 }
 </script>
 
@@ -89,7 +89,20 @@ export default {
 		&:after {
 			transform: rotate(-45deg);
 		}
-}
+	}
+
+	.info
+	{
+		font-family: "Lucida Console", "Courier New", monospace;
+		padding: 5px;
+		font-weight: 600;
+		font-size: 1em;
+		position: absolute;
+		left: 15px;
+		top: 15px;
+		background-color: rgba(0,0,0,.5);
+		color: #fff;
+	}
 
 @media (max-width: 810px) {
 	.viewer

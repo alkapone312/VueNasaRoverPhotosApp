@@ -99,6 +99,7 @@ export default {
 		left: 50%;
 		top: 50%;
 		transform: translate(-50%, -50%);
+		margin-top: 20px;
 	}
 
 	.pickerWrapper *
@@ -127,11 +128,6 @@ export default {
 		transition: border-width .1s ease;
 		color: #ccc;
 		outline: none;
-	}
-
-	.pick:focus
-	{
-		border: 3px solid #02b6ff;
 	}
 
 	label

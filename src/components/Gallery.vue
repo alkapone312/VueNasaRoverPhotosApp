@@ -1,9 +1,9 @@
 <template>
   <div class="gallery">
-      <div class="close" @click="$emit('closeImage')"></div>
+      <div class="close" @click="$emit('closeGallery')"></div>
 
       <TransitionGroup name="showImage">
-        <img v-for="i in data.photos.length" :class="{show : show[i]}" :key="i" class="galleryItem" :src="data.photos[i-1].img_src" @load="showElement(i)" @click="$emit('openImage', i)"/>
+        <img v-for="i in data.photos.length" :class="{show : show[i-1]}" :key="i-1" class="galleryItem" :src="data.photos[i-1].img_src" @load="showElement(i-1)" @click="$emit('openImage', i-1)"/>
       </TransitionGroup>
   </div>
 </template>
@@ -63,7 +63,6 @@ export default {
     &:hover
     {
       box-shadow: 0 10px 20px -8px black;
-      margin: 2px;
     }
   }
 
