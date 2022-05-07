@@ -7,7 +7,7 @@
       <Picker v-if="this.ready && this.mode === 0" @request="handleRequest"/>
     </Transition>
 
-    <Gallery />
+    <Gallery v-if="mode=== 1" :data="data"/>
 
     <Transition name="noResults">
       <NoResults v-if="this.noResults"/>
@@ -107,7 +107,6 @@ export default {
     margin: 0;
     padding: 0;
     font-family: 'Maven Pro', sans-serif;
-    overflow: hidden;
   }
 
   input[type="number"] {
