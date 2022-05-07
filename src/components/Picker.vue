@@ -24,6 +24,11 @@
 			<option value="MINITES">Miniature Thermal Emission Spectrometer</option>
 		</select>
 
+		<div class="dateType" @click="this.dateType = !this.dateType;">
+			<div :class="{active : !dateType}">Sols</div>
+			<div :class="{active : dateType}">Earth date</div>
+		</div>
+
 		<div class="date" v-if="this.dateType">
 			<label for="day">Day</label>
 			<label for="month">Month</label>
@@ -36,11 +41,6 @@
 
 		<div class="sol" v-if="!this.dateType">
 			<input type="number" class = "sol pick" name="sol" min="0" v-model="sol">
-		</div>
-
-		<div class="dateType" @click="this.dateType = !this.dateType;">
-			<div :class="{active : !dateType}">Sols</div>
-			<div :class="{active : dateType}">Earth date</div>
 		</div>
 
 		<button class="search" @click = "handleRequest">
@@ -89,7 +89,7 @@ export default {
 	.pickerWrapper
 	{
 		display: grid;
-		grid-template-rows:2fr 0.5fr 1.5fr 0.5fr 1.5fr 0.5fr 1.5fr 0.2fr 0.3fr;
+		grid-template-rows:2fr 0.5fr 1fr 0.5fr 1fr 0.5fr 3fr 0.2fr 0.3fr;
 		width: 80%;
 		height: 600px;
 
