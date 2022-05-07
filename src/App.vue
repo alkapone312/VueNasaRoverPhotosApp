@@ -7,10 +7,11 @@
       <Picker v-if="this.ready && this.mode === 0" @request="handleRequest"/>
     </Transition>
 
+    <Gallery />
+
     <Transition name="noResults">
       <NoResults v-if="this.noResults"/>
     </Transition>
-
 
   </div>
 </template>
@@ -21,6 +22,7 @@ import axios from 'axios';
 import HeroImage from './components/HeroImage.vue';
 import Picker from './components/Picker.vue';
 import NoResults from './components/NoResults.vue';
+import Gallery from './components/Gallery.vue';
 //create your own api key here - https://api.nasa.gov/
 import Config from './config.js';
 
@@ -30,6 +32,13 @@ const api_key = Config.api_key;
 export default {
 
   name: 'App',
+
+  components: {
+    Gallery,
+    NoResults,
+    Picker,
+    HeroImage,
+  },
 
   data () {
     return {
@@ -77,12 +86,6 @@ export default {
               console.log(error);
             });
     }
-  },
-
-  components: {
-    NoResults,
-    Picker,
-    HeroImage,
   },
 
   mounted() {
