@@ -41,10 +41,17 @@
 			<div :class="{active : dateType}">Earth date</div>
 			<div :class="{active : !dateType}">Sols</div>
 		</div>
+
+		<button class="search">
+			Search!
+		</button>
 	</div>
 </template>
 
 <script>
+import axios from 'axios';
+
+
 export default {
 
   name: 'Picker',
@@ -63,7 +70,7 @@ export default {
 	.pickerWrapper
 	{
 		display: grid;
-		grid-template-rows:2fr 0.5fr 1.5fr 0.5fr 1.5fr 0.5fr 1.5fr 0.2fr;
+		grid-template-rows:2fr 0.5fr 1.5fr 0.5fr 1.5fr 0.5fr 1.5fr 0.2fr 0.3fr;
 		width: 80%;
 		height: 600px;
 
@@ -169,5 +176,24 @@ export default {
 	.active
 	{
 		font-weight: 600;
+	}
+
+	.search
+	{
+		position: relative;
+		z-index: 1;
+		color: #fff;
+		font-size: 1.5em;
+		width: 200px;
+		height: 50px;
+		border:none;
+		background-color: rgba(#000, .8);
+		cursor: pointer;
+		transition: background-color .3s ease;
+
+		&:hover
+		{
+			background-color: rgba(#000, 0.75);
+		}
 	}
 </style>
