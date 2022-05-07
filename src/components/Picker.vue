@@ -1,18 +1,18 @@
 <template>
-	<Transition name="view">
-	<div class="pickerWrapper" v-if="this.ready">
+	<div class="pickerWrapper">
 
 		<p class="quote">"Almost before we knew it, we had left the ground."</p>
 
 		<label for="rover">Rover:</label>
-		<select name="rover" class="pick">
+		<select name="rover" class="pick" v-model="rover">
 			<option value="curiosity">Curiosity</option>
 			<option value="opportunity">Opportunity</option>
 			<option value="spirit">Spirit</option>
 		</select>
 
 		<label for="camera">Camera:</label>
-		<select name="camera" class="pick">
+		<select name="camera" class="pick" v-model="camera">
+			<option value="">(Optional) Pick rover camera</option>
 			<option value="FHAZ">Front Hazard Avoidance Camera</option>
 			<option value="RHAZ">Rear Hazard Avoidance Camera</option>
 			<option value="MAST">Mast Camera</option>
@@ -29,45 +29,57 @@
 			<label for="month">Month</label>
 			<label for="year">Year</label>
 
-			<input type="number" class = "day pick" name="day" min="1" max="31" value="1">
-			<input type="number" class = "month pick" name="month" min="1" max="12" value="1">
-			<input type="number" class = "year pick" name="year" min="1980" max="2022" value="1980">
+			<input type="number" class = "day pick" name="day" min="1" max="31" v-model="day">
+			<input type="number" class = "month pick" name="month" min="1" max="12" v-model="month">
+			<input type="number" class = "year pick" name="year" min="1980" max="2022" v-model="year">
 		</div>
 
 		<div class="sol" v-if="!this.dateType">
-			<input type="number" class = "sol pick" name="sol" min="0" value="0">
+			<input type="number" class = "sol pick" name="sol" min="0" v-model="sol">
 		</div>
 
 		<div class="dateType" @click="this.dateType = !this.dateType;">
-			<div :class="{active : dateType}">Earth date</div>
 			<div :class="{active : !dateType}">Sols</div>
+			<div :class="{active : dateType}">Earth date</div>
 		</div>
 
-		<button class="search">
+		<button class="search" @click = "handleRequest">
 			Search!
 		</button>
 	</div>
-	</Transition>
 </template>
 
 <script>
-import axios from 'axios';
-
-
 export default {
 
   name: 'Picker',
 
   data () {
     return {
-    	dateType: true, //true - earth date, false - sol's
-    	ready: false,
+    	dateType: false, //true - earth date, false - sol's
+    	rover: 'curiosity',
+    	camera: '',
+    	sol: 0,
+    	day: 1,
+    	month: 1,
+    	year: 1980
+
     }
   },
 
-  mounted() {
-  	this.ready=true;
-  }
+  methods: {
+    handleRequest () {
+      this.$emit('request',{
+      		rover: this.rover,
+      		camera: this.camera,
+      		dateType: this.dateType,
+      		sol: this.sol,
+      		day: this.day,
+      		month: this.month,
+      		year: this.year
+      	});
+    }
+  },
 }
 </script>
 
@@ -87,6 +99,7 @@ export default {
 		left: 50%;
 		top: 50%;
 		transform: translate(-50%, -50%);
+		margin-top: 20px;
 	}
 
 	.pickerWrapper *
@@ -115,11 +128,6 @@ export default {
 		transition: border-width .1s ease;
 		color: #ccc;
 		outline: none;
-	}
-
-	.pick:focus
-	{
-		border: 3px solid #02b6ff;
 	}
 
 	label
@@ -206,18 +214,6 @@ export default {
 		}
 	}
 
-	.view-enter-active,
-	.view-leave-active {
-	  transition: all 1s ease;
-	  transition-delay: .1s;
-	}
-
-	.view-enter-from,
-	.view-leave-to {
-	  opacity: 0;
-	  margin-top: 50px;
-	}
-
 	@media (min-width: 810px) {
 		.quote
 		{
@@ -226,9 +222,14 @@ export default {
 	}
 
 	@media (min-width: 1024px) {
+		.pickerWrapper
+		{
+			width: 60%;
+		}
+
 		.quote
 		{
-			font-size: 3em;
+			font-size: 2.5em;
 		}
 	}
 
