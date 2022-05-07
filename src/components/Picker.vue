@@ -1,6 +1,5 @@
 <template>
-	<Transition name="view">
-	<div class="pickerWrapper" v-if="this.ready">
+	<div class="pickerWrapper">
 
 		<p class="quote">"Almost before we knew it, we had left the ground."</p>
 
@@ -48,7 +47,6 @@
 			Search!
 		</button>
 	</div>
-	</Transition>
 </template>
 
 <script>
@@ -59,7 +57,6 @@ export default {
   data () {
     return {
     	dateType: false, //true - earth date, false - sol's
-    	ready: false,
     	rover: 'curiosity',
     	camera: '',
     	sol: 0,
@@ -83,10 +80,6 @@ export default {
       	});
     }
   },
-
-  mounted() {
-  	this.ready=true;
-  }
 }
 </script>
 
@@ -225,18 +218,6 @@ export default {
 		}
 	}
 
-	.view-enter-active,
-	.view-leave-active {
-	  transition: all 1s ease;
-	  transition-delay: .1s;
-	}
-
-	.view-enter-from,
-	.view-leave-to {
-	  opacity: 0;
-	  margin-top: 50px;
-	}
-
 	@media (min-width: 810px) {
 		.quote
 		{
@@ -245,6 +226,11 @@ export default {
 	}
 
 	@media (min-width: 1024px) {
+		.pickerWrapper
+		{
+			width: 60%;
+		}
+
 		.quote
 		{
 			font-size: 3em;
